@@ -9,6 +9,8 @@
 #ifndef _COMMON_H_
 #define _COMMON_H_
 
+#include "hardware/vreg.h"
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -98,6 +100,14 @@
 //#define V_CORE_HI VREG_VOLTAGE_1_50
 #define V_CORE_HI VREG_VOLTAGE_1_30
 #define V_CORE_LO VREG_VOLTAGE_1_05
+
+#define EXT_CORE_SUPPLY (true)
+
+#if EXT_CORE_SUPPLY
+#define CORE_VREG_SET(v) ((void)0)
+#else
+#define CORE_VREG_SET(v) vreg_set_voltage(v)
+#endif
 
 
 // 初期オーディオサンプル周波数

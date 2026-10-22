@@ -16,6 +16,7 @@
 void renew_cpu_clock(bool is_high_power)
 {
 	// CPUクロックを再設定
+	// DVDDは外部LDO(1.3V固定)。EXT_CORE_SUPPLY有効時、CORE_VREG_SET()は何もしない
 	switch (audio_state.freq)
 	{
 	case 192000:
@@ -23,7 +24,7 @@ void renew_cpu_clock(bool is_high_power)
 	case 48000:
 		if (is_high_power)
 		{
-			vreg_set_voltage(V_CORE_HI);
+			CORE_VREG_SET(V_CORE_HI);
 			busy_wait_us(100);
 			set_sys_clock_khz(SYS_CLOCK_KHZ_48K, true);
 			busy_wait_us(50);
@@ -32,7 +33,7 @@ void renew_cpu_clock(bool is_high_power)
 		{
 			set_sys_clock_khz(SYS_CLOCK_KHZ_LP_48K, true);
 			busy_wait_us(100);
-			vreg_set_voltage(V_CORE_LO);
+			CORE_VREG_SET(V_CORE_LO);
 			busy_wait_us(50);
 		}
 		break;
@@ -42,7 +43,7 @@ void renew_cpu_clock(bool is_high_power)
 	default:
 		if (is_high_power)
 		{
-			vreg_set_voltage(V_CORE_HI);
+			CORE_VREG_SET(V_CORE_HI);
 			busy_wait_us(100);
 			set_sys_clock_khz(SYS_CLOCK_KHZ_44K, true);
 			busy_wait_us(50);
@@ -51,7 +52,7 @@ void renew_cpu_clock(bool is_high_power)
 		{
 			set_sys_clock_khz(SYS_CLOCK_KHZ_LP_44K, true);
 			busy_wait_us(100);
-			vreg_set_voltage(V_CORE_LO);
+			CORE_VREG_SET(V_CORE_LO);
 			busy_wait_us(50);
 		}
 		break;

@@ -178,8 +178,8 @@ int main(void)
 	}
 
 	// 動作電圧とクロックを引き上げる
-	vreg_set_voltage(V_CORE_HI);
-	sleep_ms(2);
+	// DVDDは外部LDO(1.3V固定)のため、EXT_CORE_SUPPLY有効時は電圧設定を行わない
+	CORE_VREG_SET(V_CORE_HI);
 	set_sys_clock_khz(SYS_CLOCK_KHZ_44K, true);
 	sleep_us(1);
 
